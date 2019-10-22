@@ -1,6 +1,6 @@
 azure_region = "uksouth"
 kubernetes_version = "1.14.5"
-resource_group = "AKSCluster-RG"
+resource_group = "Azure SPN"
 acr_name = "aksterraformacr"
 keyvault_rg ="AKSTerraform-RG"
 keyvault_name = "dbankkeyvault"

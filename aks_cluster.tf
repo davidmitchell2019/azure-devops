@@ -28,7 +28,7 @@ resource "azurerm_kubernetes_cluster" "aks_k2" {
   linux_profile {
     admin_username = var.admin_username
     ssh_key {
-      key_data = data.azurerm_key_vault_secret.ssh_public_key.value
+      key_data = var.ssh_public_key
     }
   }
 
@@ -39,7 +39,6 @@ resource "azurerm_kubernetes_cluster" "aks_k2" {
     docker_bridge_cidr = "172.17.0.1/16"
     service_cidr       = "172.16.0.0/16" # Must not overlap any address from the VNEt
   }
-
 
   role_based_access_control {
     enabled = true

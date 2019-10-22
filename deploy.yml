@@ -29,9 +29,9 @@ stages:
               command: init
               workingDirectory: $(Pipeline.Workspace)/terraform_out
               backendType: azurerm
-              backendServiceArm: 'Azure SPN'
+              backendServiceArm: 'AksTerraformSPN'
               backendAzureRmResourceGroupName: 'AKSTerraform-RG'
-              backendAzureRmStorageAccountName: 'nyuenterraformstate'
+              backendAzureRmStorageAccountName: 'dbsaccount'
               backendAzureRmContainerName: 'tfstate'
               backendAzureRmKey: 'demo.terraform.tfstate'
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0

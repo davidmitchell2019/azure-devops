@@ -40,6 +40,10 @@ variable "kubernetes_version" {
   default = "1.14.3"
 }
 
+variable "ssh_public_key" {
+    default = "id_rsa_terraform.pub"
+}
+
 #AKS Agent pools
 variable "agent_pools" {
   default = [
