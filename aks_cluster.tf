@@ -2,7 +2,6 @@ resource "azurerm_resource_group" "aks_demo_rg" {
   name     = var.resource_group
   location = var.azure_region
 }
-
 resource "azurerm_kubernetes_cluster" "aks_k2" {
   name                = var.cluster_name
   location            = azurerm_resource_group.aks_demo_rg.location
@@ -24,14 +23,12 @@ resource "azurerm_kubernetes_cluster" "aks_k2" {
       vnet_subnet_id  = azurerm_subnet.aks_subnet.id
     }
   }
-
   linux_profile {
     admin_username = var.admin_username
     ssh_key {
       key_data = var.ssh_public_key
     }
   }
-
   network_profile {
     network_plugin     = "azure"
     network_policy     = "azure"     # Options are calico or azure - only if network plugin is set to azure
@@ -39,25 +36,20 @@ resource "azurerm_kubernetes_cluster" "aks_k2" {
     docker_bridge_cidr = "172.17.0.1/16"
     service_cidr       = "172.16.0.0/16" # Must not overlap any address from the VNEt
   }
-
   role_based_access_control {
     enabled = true
   }
-
   service_principal {
     client_id     = data.azurerm_key_vault_secret.spn_id.value
     client_secret = data.azurerm_key_vault_secret.spn_secret.value
   }
-
   tags = {
     Environment = "Demo"
   }
 }
-
 output "client_certificate" {
   value = "${azurerm_kubernetes_cluster.aks_k2.kube_config.0.client_certificate}"
 }
-
 output "kube_config" {
   value = "${azurerm_kubernetes_cluster.aks_k2.kube_config_raw}"
 }
