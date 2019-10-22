@@ -1,0 +1,70 @@
+ Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+<<<<<<< HEAD
+resources:
+- repo: self
+
+stages:
+- stage: Deploy
+  jobs:
+    # track deployments on the environment
+  - deployment: Deploy_Terraform
+    pool:
+      vmImage: 'ubuntu-latest'
+    # creates an environment if it doesn’t exist
+    environment: 'DEV'
+    strategy:
+      # default deployment strategy
+      runOnce:
+        deploy:
+          steps:
+          # - download: current
+          #   artifact: terraform_out
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: 'terraform init'
+            inputs:
+              command: init
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              backendType: azurerm
+              backendServiceArm: 'Azure SPN'
+              backendAzureRmResourceGroupName: 'AKSTerraform-RG'
+              backendAzureRmStorageAccountName: 'nyuenterraformstate'
+              backendAzureRmContainerName: 'tfstate'
+              backendAzureRmKey: 'demo.terraform.tfstate'
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: 'terraform plan'
+            inputs:
+              command: plan
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              environmentServiceName: 'Azure SPN'
+              secureVarsFile: 'aks_conf.tfvars'
+              commandOptions: '-out $(Pipeline.Workspace)/terraform_out/terraform_aks_out'
+              terraformVersion: 0.12.6
+          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+            displayName: 'terraform apply'
+            inputs:
+              command: apply
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              environmentServiceName: 'Azure SPN'
+              commandOptions: '$(Pipeline.Workspace)/terraform_out/terraform_aks_out'
+              terraformVersion: 0.12.6
+
+=======
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+>>>>>>> fb035c8f02b77bd44111aa9ad154135a6620a13a
