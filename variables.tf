@@ -1,3 +1,11 @@
+# Variable Service Principal clientID
+variable "acr_name" {
+  type = string
+}
+variable "aks_vnet_name" {
+    type = string
+    default = "aksvnet"
+}
 #KeyVault Resource Group and KeyVaultName
 variable "keyvault_rg" {
   type    = string
