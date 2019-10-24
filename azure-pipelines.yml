@@ -24,7 +24,7 @@ stages:
         command: init
         workingDirectory: 1-terraform
         backendType: azurerm
-        backendServiceArm: 'AksTerraformSPN'
+        backendServiceArm: 'connection'
         backendAzureRmResourceGroupName: 'AKSTerraform-RG'
         backendAzureRmStorageAccountName: 'nyuenterraformstate'
         backendAzureRmContainerName: 'tfstate'
@@ -57,7 +57,7 @@ stages:
               command: init
               workingDirectory: $(Pipeline.Workspace)/terraform_out
               backendType: azurerm
-              backendServiceArm: 'AksTerraformSPN'
+              backendServiceArm: 'connection'
               backendAzureRmResourceGroupName: 'AKSTerraform-RG'
               backendAzureRmStorageAccountName: 'nyuenterraformstate'
               backendAzureRmContainerName: 'tfstate'
