@@ -1,5 +1,5 @@
 azure_region = "uksouth"
-kubernetes_version = "1.14.5"
+kubernetes_version = "1.14.6"
 resource_group = "AKSCluster-RG"
 acr_name = "aksterraformacrfordeutsche"
 keyvault_rg ="AKSTerraform-RG"
