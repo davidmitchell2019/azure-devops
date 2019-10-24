@@ -69,7 +69,7 @@ stages:
               workingDirectory: $(Pipeline.Workspace)/terraform_out
               environmentServiceName: 'connection'
               secureVarsFile: 'aks_conf.tfvars'
-              commandOptions: '-out $(Pipeline.Workspace)/terraform_out/terraform_aks_out'
+              commandOptions: '-out $(Pipeline.Workspace)/terraform_aks_out'
               terraformVersion: 0.12.6
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform apply'
