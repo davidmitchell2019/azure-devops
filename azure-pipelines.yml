@@ -62,8 +62,8 @@ stages:
               backendAzureRmStorageAccountName: 'dbsaccount'
               backendAzureRmContainerName: 'tfstate'
               backendAzureRmKey: 'demo.terraform.tfstate'
-              - script: pwd
-                displayName: print working directory
+          - script: pwd
+            displayName: print working directory
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform plan'
             inputs:
