@@ -66,16 +66,16 @@ stages:
             displayName: 'terraform plan'
             inputs:
               command: plan
-              workingDirectory: $(Pipeline.Workspace)/
+              workingDirectory: /home/vsts/work/1/s/.git/terraform_out
               environmentServiceName: 'connection'
               secureVarsFile: 'aks_conf.tfvars'
-              commandOptions: '-out $(Pipeline.Workspace)/terraform_out/terraform_aks_out'
+              commandOptions: '-out /home/vsts/work/1/s/.git/terraform_out/terraform_aks_out'
               terraformVersion: 0.12.6
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform apply'
             inputs:
               command: apply
-              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              workingDirectory: /home/vsts/work/1/s/.git/terraform_out
               environmentServiceName: 'connection'
-              commandOptions: '$(Pipeline.Workspace)/terraform_out/terraform_aks_out'
+              commandOptions: '/home/vsts/work/1/s/.git/terraform_out/terraform_aks_out'
               terraformVersion: 0.12.6
