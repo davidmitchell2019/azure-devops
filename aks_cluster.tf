@@ -23,12 +23,6 @@ resource "azurerm_kubernetes_cluster" "aks_k2" {
       vnet_subnet_id  = azurerm_subnet.aks_subnet.id
     }
   }
-  linux_profile {
-    admin_username = var.admin_username
-    ssh_key {
-      key_data = var.ssh_public_key
-    }
-  }
   network_profile {
     network_plugin     = "azure"
     network_policy     = "azure"     # Options are calico or azure - only if network plugin is set to azure
