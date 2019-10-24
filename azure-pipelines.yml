@@ -49,6 +49,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          #check for git files
+          - script: ls /home/vsts/work/1/s/
+            displayName: Get the date
           # - download: current
           #   artifact: terraform_out
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
