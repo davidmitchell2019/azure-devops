@@ -75,7 +75,8 @@ stages:
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform apply'
             inputs:
-              command: apply -var-file=aks_conf.tfvars
+              command: apply
               workingDirectory: /home/vsts/work/1/s/azure-devops/
+              secureVarsFile: 'aks_conf.tfvars'
               environmentServiceName: 'connection'
               terraformVersion: 0.12.6
