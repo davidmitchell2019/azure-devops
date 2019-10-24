@@ -22,7 +22,7 @@ stages:
       displayName: 'terraform init'
       inputs:
         command: init
-        workingDirectory: 1-terraform
+        workingDirectory: $(System.DefaultWorkingDirectory)/
         backendType: azurerm
         backendServiceArm: 'connection'
         backendAzureRmResourceGroupName: 'AKSTerraform-RG'
