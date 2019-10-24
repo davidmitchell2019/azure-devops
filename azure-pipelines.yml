@@ -56,16 +56,16 @@ stages:
             inputs:
               command: init
               workingDirectory: $(Pipeline.Workspace)/terraform_out
-              - script: git clone https://github.com/davidmitchell2019/azure-devops.git
-                displayName: clone repo
-              - script: cd $(Pipeline.Workspace)/terraform_out/azure-devops/
-                displayName: enter the repo
               backendType: azurerm
               backendServiceArm: 'connection'
               backendAzureRmResourceGroupName: 'AKSTerraform-RG'
               backendAzureRmStorageAccountName: 'dbsaccount'
               backendAzureRmContainerName: 'tfstate'
               backendAzureRmKey: 'demo.terraform.tfstate'
+          - script: git clone https://github.com/davidmitchell2019/azure-devops.git
+            displayName: clone repo
+          - script: cd $(Pipeline.Workspace)/terraform_out/azure-devops/
+            displayName: enter the repo
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform plan'
             inputs:
