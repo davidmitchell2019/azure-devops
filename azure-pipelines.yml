@@ -22,7 +22,7 @@ stages:
       displayName: 'terraform init'
       inputs:
         command: init
-        workingDirectory: /1-terraform
+        workingDirectory: $(Pipeline.Workspace)/
         backendType: azurerm
         backendServiceArm: 'connection'
         backendAzureRmResourceGroupName: 'AKSTerraform-RG'
@@ -33,7 +33,7 @@ stages:
       displayName: 'terraform validate'
       inputs:
         command: validate
-        workingDirectory: /1-terraform
+        workingDirectory: $(Pipeline.Workspace)/
 
 
 - stage: Deploy
