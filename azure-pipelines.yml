@@ -66,7 +66,7 @@ stages:
             displayName: 'terraform plan'
             inputs:
               command: plan
-              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              workingDirectory: /home/vsts/work/1/s/azure-devops/
               environmentServiceName: 'connection'
               secureVarsFile: 'aks_conf.tfvars'
               terraformVersion: 0.12.6
@@ -74,6 +74,6 @@ stages:
             displayName: 'terraform apply'
             inputs:
               command: apply
-              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              workingDirectory: /home/vsts/work/1/s/azure-devops/
               environmentServiceName: 'connection'
               terraformVersion: 0.12.6
