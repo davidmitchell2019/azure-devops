@@ -51,19 +51,19 @@ stages:
           steps:
           # - download: current
           #   artifact: terraform_out
+          - script: git clone https://github.com/davidmitchell2019/azure-devops.git && pwd
+            displayName: clone repo
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform init'
             inputs:
               command: init
-              workingDirectory: $(Pipeline.Workspace)/terraform_out
+              workingDirectory: /home/vsts/work/1/s/azure-devops/
               backendType: azurerm
               backendServiceArm: 'connection'
               backendAzureRmResourceGroupName: 'AKSTerraform-RG'
               backendAzureRmStorageAccountName: 'dbsaccount'
               backendAzureRmContainerName: 'tfstate'
               backendAzureRmKey: 'demo.terraform.tfstate'
-          - script: git clone https://github.com/davidmitchell2019/azure-devops.git && pwd
-            displayName: clone repo
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform plan'
             inputs:
@@ -76,6 +76,6 @@ stages:
             displayName: 'terraform apply'
             inputs:
               command: apply
-              workingDirectory: /home/vsts/work/1/s/
+              workingDirectory: /home/vsts/work/1/s/azure-devops/
               environmentServiceName: 'connection'
               terraformVersion: 0.12.6
