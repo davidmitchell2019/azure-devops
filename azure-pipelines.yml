@@ -62,16 +62,13 @@ stages:
               backendAzureRmStorageAccountName: 'dbsaccount'
               backendAzureRmContainerName: 'tfstate'
               backendAzureRmKey: 'demo.terraform.tfstate'
-          - script: pwd
-            displayName: print working directory
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform plan'
             inputs:
               command: plan
-              workingDirectory: $(Pipeline.Workspace)/terraform_out/.git/azure-devops/
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
               environmentServiceName: 'connection'
               secureVarsFile: 'aks_conf.tfvars'
-              commandOptions: '-out $(Pipeline.Workspace)/terraform_aks_out'
               terraformVersion: 0.12.6
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform apply'
@@ -79,5 +76,4 @@ stages:
               command: apply
               workingDirectory: $(Pipeline.Workspace)/terraform_out
               environmentServiceName: 'connection'
-              commandOptions: '$(Pipeline.Workspace)/terraform_out/terraform_aks_out'
               terraformVersion: 0.12.6
