@@ -12,7 +12,7 @@ stages:
   - job: Validate
     continueOnError: false
     steps:
-    - publish: $(System.DefaultWorkingDirectory)/
+    - publish: $(Pipeline.Workspace)/
       artifact: terraform_out
     - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
       displayName: 'Use Terraform v0.12.6'
@@ -22,7 +22,7 @@ stages:
       displayName: 'terraform init'
       inputs:
         command: init
-        workingDirectory: $(System.DefaultWorkingDirectory)/
+        workingDirectory: $(Pipeline.Workspace)/
         backendType: azurerm
         backendServiceArm: 'connection'
         backendAzureRmResourceGroupName: 'AKSTerraform-RG'
@@ -33,7 +33,7 @@ stages:
       displayName: 'terraform validate'
       inputs:
         command: validate
-        workingDirectory: $(System.DefaultWorkingDirectory)/
+        workingDirectory: $(Pipeline.Workspace)/
 
 
 - stage: Deploy
@@ -55,7 +55,7 @@ stages:
             displayName: 'terraform init'
             inputs:
               command: init
-              workingDirectory: $(System.DefaultWorkingDirectory)/
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
               backendType: azurerm
               backendServiceArm: 'connection'
               backendAzureRmResourceGroupName: 'AKSTerraform-RG'
@@ -66,16 +66,16 @@ stages:
             displayName: 'terraform plan'
             inputs:
               command: plan
-              workingDirectory: $(System.DefaultWorkingDirectory)/
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
               environmentServiceName: 'connection'
               secureVarsFile: 'aks_conf.tfvars'
-              commandOptions: '-out $(System.DefaultWorkingDirectory)/terraform_aks_out'
+              commandOptions: '-out $(Pipeline.Workspace)/terraform_out/terraform_aks_out'
               terraformVersion: 0.12.6
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
             displayName: 'terraform apply'
             inputs:
               command: apply
-              workingDirectory: $(System.DefaultWorkingDirectory)/terraform_aks_out
+              workingDirectory: $(Pipeline.Workspace)/terraform_out
               environmentServiceName: 'connection'
-              commandOptions: '$(System.DefaultWorkingDirectory)/terraform_aks_out'
+              commandOptions: '$(Pipeline.Workspace)/terraform_out/terraform_aks_out'
               terraformVersion: 0.12.6
