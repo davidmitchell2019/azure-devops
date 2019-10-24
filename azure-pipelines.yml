@@ -49,9 +49,6 @@ stages:
       runOnce:
         deploy:
           steps:
-          #check for git files
-          - script: ls /home/vsts/work/1/s/
-            displayName: Get the date
           # - download: current
           #   artifact: terraform_out
           - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
@@ -59,6 +56,10 @@ stages:
             inputs:
               command: init
               workingDirectory: $(Pipeline.Workspace)/terraform_out
+              - script: git clone https://github.com/davidmitchell2019/azure-devops.git
+                displayName: clone repo
+              - script: cd $(Pipeline.Workspace)/terraform_out/azure-devops/
+                displayName: enter the repo
               backendType: azurerm
               backendServiceArm: 'connection'
               backendAzureRmResourceGroupName: 'AKSTerraform-RG'
@@ -69,7 +70,7 @@ stages:
             displayName: 'terraform plan'
             inputs:
               command: plan
-              workingDirectory: /home/vsts/work/1/s/
+              workingDirectory: $(Pipeline.Workspace)/terraform_out/azure-devops/
               environmentServiceName: 'connection'
               secureVarsFile: 'aks_conf.tfvars'
               terraformVersion: 0.12.6
